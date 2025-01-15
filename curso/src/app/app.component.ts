@@ -11,10 +11,10 @@ import { LoggerService } from '@my/core';
 export class AppComponent {
   title = 'world';
 
-  constructor(out: LoggerService) {
-    out.error('Esto es un error');
-    out.warn('Esto es un warn');
-    out.info('Esto es un info');
-    out.log('Esto es un log');
-  }
+  // constructor(out: LoggerService) {
+  //   out.error('Esto es un error');
+  //   out.warn('Esto es un warn');
+  //   out.info('Esto es un info');
+  //   out.log('Esto es un log');
+  // }
 }
