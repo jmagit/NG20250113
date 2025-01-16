@@ -13,7 +13,7 @@ import { NotificationService, NotificationType } from './common-services';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'world';
+  title = 'curso';
 
   // constructor(out: LoggerService) {
   //   out.error('Esto es un error');

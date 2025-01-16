@@ -3,7 +3,7 @@ import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
 export const ERROR_LEVEL = new InjectionToken<string>('ERROR_LEVEL');
 
 @Injectable(
-  //  { providedIn: 'root'}
+  { providedIn: 'root'}
 )
 export class LoggerService {
   private nivel: number = Number.MAX_VALUE;
