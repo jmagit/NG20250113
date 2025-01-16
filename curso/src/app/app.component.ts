@@ -25,6 +25,6 @@ export class AppComponent {
   private notify = inject(NotificationService);
   // eslint-disable-next-line @angular-eslint/use-lifecycle-interface, @angular-eslint/no-empty-lifecycle-method
   ngOnInit(): void {
-    // this.notify.add('Aplicación iniciada',  NotificationType.info)
+    this.notify.add('Aplicación iniciada',  NotificationType.info)
   }
 }
