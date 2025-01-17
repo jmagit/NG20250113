@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoggerService } from '@my/core';
@@ -9,7 +10,7 @@ import { HomeComponent } from "./main/home/home.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NotificationComponent, DemosComponent, NotificationModalComponent, NotificationModalComponent, HomeComponent],
+  imports: [RouterOutlet, NotificationComponent, DemosComponent, /*NotificationModalComponent, HomeComponent*/],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
