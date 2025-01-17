@@ -1,6 +1,57 @@
+<h1>Hola {{nombre() | uppercase}}</h1>
 <p>
+  <input type="text" [(ngModel)]="nombre">
+  <input type="button" value="saluda" (click)="saluda()" >
+  <input type="button" value="despide" (click)="despide()" >
+  <input type="button" value="di algo" (click)="di('algo')" >
+  <input type="button" value="cambia" (click)="cambia()" >
+
   <input type="button" value="Error" (click)="vm.add('Esto es una notificación de error')" >
   <input type="button" value="Warn" (click)="vm.add('Esta notificación es un aviso',  vm.NotificationType.warn)" >
   <input type="button" value="Info" (click)="vm.add('Solo una notificación informativa',  vm.NotificationType.info)" >
   <input type="button" value="Log" (click)="vm.add('Para trazar con notificaciones',  vm.NotificationType.log)" >
 </p>
+
+<p [textContent]="resultado()">Esto se pierde</p>
+<p [innerHTML]="resultado()">Esto se pierde</p>
+<p [textContent]="resultado">Esto se pierde</p>
+
+<p [hidden]="!visible()">Ahora se ve</p>
+<p *ngIf="visible()">Ahora existo</p>
+@if(visible()) {
+  <p>Ahora existo (flujo)</p>
+}
+<p [ngClass]="estetica()">
+  Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio beatae, delectus exercitationem quo inventore ullam. Eius eos atque eligendi. Delectus magnam eius fugiat atque explicabo vel ea suscipit beatae iure!
+</p>
+<p [class.semi-visible]="!visible()">Ahora me ves bien</p>
+<p>Fecha: {{Fecha | date:'dd/MMM/yyyy' | uppercase}} </p>
+<p>
+  Calcula: 2 + 2 = {{(2 + 2) | number:'2.2-3'}} = {{calcula(2, 2) | currency:'EUR':'symbol':'1.2-2'}}
+</p>
+
+<ul>
+  <li *ngFor="let item of listado() | slice:-5; let indice = index; let fondo=odd;"
+    [style.background-color]="fondo ? 'LightBlue' : 'Lavender'">
+    {{item.nombre}} ({{item.id}}) [Elemento {{indice + 1}} de {{listado().length}}]
+  </li>
+</ul>
+<ul>
+  @for(item of listado() | slice:-5; track item.id;) {
+  <li [style.background-color]="$odd ? 'LightBlue' : 'Lavender'">
+    {{item.nombre | titlecase}} ({{item.id}}) [Elemento {{$index + 1}} de {{$count}}]
+  </li>
+  }
+</ul>
+<p>Total: {{total()}}</p>
+<p>
+  <select [(ngModel)]="idProvincia" >
+    <option value="">--Elige opción--</option>
+    <option *ngFor="let p of listado()" [value]="p.id">{{p.nombre}}</option>
+  </select>
+  <b>idProvincia: </b>{{idProvincia()}}
+  <input type="text" #txtProvincia value="Tabarnia">
+  <input type="button" value="Añadir" (click)="add(txtProvincia.value)">
+</p>
+
+{{listado() | json}}
