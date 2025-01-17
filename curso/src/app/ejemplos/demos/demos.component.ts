@@ -1,4 +1,4 @@
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule, CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, NgClass, NgFor, NgIf, SlicePipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { Component, computed, OnDestroy, OnInit, Signal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Unsubscribable } from 'rxjs';
@@ -6,7 +6,7 @@ import { NotificationService, NotificationType } from 'src/app/common-services';
 
 @Component({
   selector: 'app-demos',
-  imports: [FormsModule, CommonModule, NgClass],
+  imports: [FormsModule, CommonModule, NgClass, NgIf, NgFor, UpperCasePipe, DecimalPipe, CurrencyPipe, TitleCasePipe, DatePipe, SlicePipe, JsonPipe],
   templateUrl: './demos.component.html',
   styleUrl: './demos.component.css'
 })
