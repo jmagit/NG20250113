@@ -1,4 +1,4 @@
-import { Component, computed, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, computed, OnDestroy, OnInit, Signal, signal } from '@angular/core';
 import { Unsubscribable } from 'rxjs';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 
@@ -9,9 +9,9 @@ import { NotificationService, NotificationType } from 'src/app/common-services';
   styleUrl: './demos.component.css'
 })
 export class DemosComponent implements OnInit, OnDestroy {
+  private fecha = new Date('2025-01-16');
   public readonly nombre = signal<string>('Mundo');
   public readonly fontSize = signal<number>(24);
-  public readonly fecha = signal<string>('2025-01-16');
   public readonly listado = signal([
     { id: 1, nombre: 'Madrid' },
     { id: 2, nombre: 'barcelona' },
@@ -27,7 +27,18 @@ export class DemosComponent implements OnInit, OnDestroy {
 
   constructor(public vm: NotificationService) { }
 
-  private suscriptor: Unsubscribable | undefined;
+  public get Nombre(): Signal<string> { return this.nombre.asReadonly() }
+  public set Nombre(value: string) {
+    // if(this.nombre() === value) return
+    this.nombre.set(value)
+  }
+
+  public get Fecha(): string { return this.fecha.toISOString() }
+  public set Fecha(value: string) {
+    const f = new Date(value)
+    if(this.fecha === f) return
+    this.fecha = f
+  }
 
   saluda() {
     this.resultado.set(`Hola, ${this.nombre()}`);
@@ -55,6 +66,8 @@ export class DemosComponent implements OnInit, OnDestroy {
     this.listado.update(lista => [...lista, { id, nombre: provincia }]);
     this.idProvincia.set(id);
   }
+
+  private suscriptor: Unsubscribable | undefined;
 
   ngOnInit(): void {
     this.suscriptor = this.vm.Notificacion.subscribe(n => {
