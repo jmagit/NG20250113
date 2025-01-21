@@ -6,16 +6,18 @@ import { Unsubscribable } from 'rxjs';
 import { CardComponent, FormButtonsComponent } from 'src/app/common-component';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 import { CalculadoraComponent } from '../calculadora/calculadora.component';
+import { NotificationComponent } from 'src/app/main';
 
 @Component({
   selector: 'app-demos',
   imports: [FormsModule, CommonModule, NgClass, NgIf, NgFor,
     UpperCasePipe, DecimalPipe, CurrencyPipe, TitleCasePipe, DatePipe, SlicePipe, JsonPipe,
     ElipsisPipe, CapitalizePipe, ExecPipe, SizerComponent, FormButtonsComponent, CardComponent,
-    CalculadoraComponent,
+    CalculadoraComponent, NotificationComponent,
   ],
   templateUrl: './demos.component.html',
-  styleUrl: './demos.component.css'
+  styleUrl: './demos.component.css',
+  providers: [NotificationService],
 })
 export class DemosComponent implements OnInit, OnDestroy {
   private fecha = new Date('2025-01-16');
@@ -105,7 +107,7 @@ export class DemosComponent implements OnInit, OnDestroy {
   ];
   idioma = this.idiomas[0].codigo;
   calculos: Calculo[] = [];
-  valCalculadora = 777;
+  valCalculadora = 666;
 
   ponResultado(origen: string, valor: number) {
     this.calculos.push({
