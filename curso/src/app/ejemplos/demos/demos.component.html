@@ -54,7 +54,11 @@
   <input type="button" value="Añadir" (click)="add(txtProvincia.value)">
 </p>
 
-<my-sizer (sizeChange)="fontSize.set($event)" [step]="2" />
-<p [style.font-size.px]="fontSize()">
-{{listado() | json}}
-</p>
+<my-sizer [(size)]="fontSize" [step]="2" />
+<app-card header="Ejemplo de {{nombre()}}">
+  <p [style.font-size.px]="fontSize()">
+  {{listado() | json}}
+  </p>
+</app-card>
+<app-form-buttons send-text="aceptar"
+  (send)="vm.add('Enviado')" (delete)="vm.add('Borrado')" (abandon)="vm.add('Abandonado')">

@@ -3,13 +3,15 @@ import { Component, computed, effect, OnDestroy, OnInit, Signal, signal } from '
 import { FormsModule } from '@angular/forms';
 import { CapitalizePipe, ElipsisPipe, ExecPipe, LoggerService, SizerComponent } from '@my/core';
 import { Unsubscribable } from 'rxjs';
+import { CardComponent, FormButtonsComponent } from 'src/app/common-component';
 import { NotificationService, NotificationType } from 'src/app/common-services';
+import GraficoSvgComponent from '../grafico-svg/grafico-svg.component';
 
 @Component({
   selector: 'app-demos',
   imports: [FormsModule, CommonModule, NgClass, NgIf, NgFor,
     UpperCasePipe, DecimalPipe, CurrencyPipe, TitleCasePipe, DatePipe, SlicePipe, JsonPipe,
-    ElipsisPipe, CapitalizePipe, ExecPipe, SizerComponent,
+    ElipsisPipe, CapitalizePipe, ExecPipe, SizerComponent, FormButtonsComponent, CardComponent, GraficoSvgComponent,
   ],
   templateUrl: './demos.component.html',
   styleUrl: './demos.component.css'

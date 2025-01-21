@@ -1,0 +1,11 @@
+<header>
+  <nav>
+    @for (item of menu; track $index) {
+      <button type="button" (click)="actual.set($index)">{{item.texto}}</button>
+    }
+  </nav>
+</header>
+<main class="container-fluid">
+  <app-notification />
+  <ng-container *ngComponentOutlet="cuerpo()" />
+</main>
