@@ -11,7 +11,7 @@ import { DashboardComponent } from './ejemplos/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NotificationComponent, DemosComponent, /*NotificationModalComponent, HomeComponent*/ DashboardComponent, ],
+  imports: [RouterOutlet, /*NotificationComponent, DemosComponent, NotificationModalComponent, HomeComponent*/ DashboardComponent, ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
