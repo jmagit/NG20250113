@@ -7,10 +7,11 @@ import { DemosComponent } from './ejemplos';
 import { NotificationModalComponent } from "./main/notification-modal/notification-modal.component";
 import { NotificationService, NotificationType } from './common-services';
 import { HomeComponent } from "./main/home/home.component";
+import { DashboardComponent } from './ejemplos/dashboard/dashboard.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NotificationComponent, DemosComponent, /*NotificationModalComponent, HomeComponent*/],
+  imports: [RouterOutlet, NotificationComponent, DemosComponent, /*NotificationModalComponent, HomeComponent*/ DashboardComponent, ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
