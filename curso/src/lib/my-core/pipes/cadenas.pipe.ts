@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'elipsis'
+    name: 'elipsis'
 })
 export class ElipsisPipe implements PipeTransform {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,8 +12,7 @@ export class ElipsisPipe implements PipeTransform {
 }
 
 @Pipe({
-  name: 'capitalize',
-  standalone: true
+    name: 'capitalize'
 })
 export class CapitalizePipe implements PipeTransform {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -26,13 +25,43 @@ export class CapitalizePipe implements PipeTransform {
 }
 
 @Pipe({
-  name: 'exec',
-  standalone: true
+    name: 'striptags'
 })
-export class ExecPipe implements PipeTransform {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type, @typescript-eslint/no-explicit-any
-  transform(fn: Function, ...args: any[]): any {
-    return fn(...args);
+export class StripTagsPipe implements PipeTransform {
+
+  transform(text: string, ...allowedTags: string[]): string {
+    const etiquetas = `(?:.|\\s)*?`
+    return allowedTags.length > 0
+      ? text.replace(new RegExp(`<(?!\\/?(${allowedTags.join('|')})\\s*\\/?)[^>]+>`, 'g'), '')
+      : text.replace(new RegExp(`<${etiquetas}>`, 'g'), '');
   }
 }
 
+@Pipe({
+    name: 'errormsg'
+})
+export class ErrorMessagePipe implements PipeTransform {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform(value: any, patternMsg?: string): string {
+    if (!value) return ''
+    let msg = '';
+    for (const err in value) {
+      switch (err) {
+        case 'required': msg += 'Es obligatorio. '; break;
+        case 'minlength': msg += `Como mínimo debe tener ${value[err].requiredLength} caracteres. `; break;
+        case 'maxlength': msg += `Como máximo debe tener ${value[err].requiredLength} caracteres. `; break;
+        case 'pattern': msg += (patternMsg ? patternMsg : 'El formato no es correcto') + '. '; break;
+        case 'email': msg += 'El formato del correo electrónico no es correcto. '; break;
+        case 'min': msg += `El valor debe ser mayor o igual a ${value[err].min}. `; break;
+        case 'max': msg += `El valor debe ser inferior o igual a ${value[err].max}. `; break;
+        default:
+          if (typeof value[err] === 'string')
+            msg += `${value[err]}${value[err].endsWith('.') ? '' : '.'} `;
+          else if (typeof value[err]?.message === 'string')
+            msg += `${value[err].message}${value[err].message.endsWith('.') ? '' : '.'} `;
+          break;
+      }
+    }
+    return msg.trim();
+  }
+}

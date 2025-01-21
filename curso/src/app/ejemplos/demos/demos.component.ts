@@ -5,13 +5,14 @@ import { CapitalizePipe, ElipsisPipe, ExecPipe, LoggerService, SizerComponent } 
 import { Unsubscribable } from 'rxjs';
 import { CardComponent, FormButtonsComponent } from 'src/app/common-component';
 import { NotificationService, NotificationType } from 'src/app/common-services';
-import GraficoSvgComponent from '../grafico-svg/grafico-svg.component';
+import { CalculadoraComponent } from '../calculadora/calculadora.component';
 
 @Component({
   selector: 'app-demos',
   imports: [FormsModule, CommonModule, NgClass, NgIf, NgFor,
     UpperCasePipe, DecimalPipe, CurrencyPipe, TitleCasePipe, DatePipe, SlicePipe, JsonPipe,
-    ElipsisPipe, CapitalizePipe, ExecPipe, SizerComponent, FormButtonsComponent, CardComponent, GraficoSvgComponent,
+    ElipsisPipe, CapitalizePipe, ExecPipe, SizerComponent, FormButtonsComponent, CardComponent,
+    CalculadoraComponent,
   ],
   templateUrl: './demos.component.html',
   styleUrl: './demos.component.css'
@@ -95,4 +96,28 @@ export class DemosComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  // Ejemplo de Calculadora
+  idiomas = [
+    { codigo: 'en-US', region: 'USA' },
+    { codigo: 'es', region: 'España' },
+    { codigo: 'pt', region: 'Portugal' },
+  ];
+  idioma = this.idiomas[0].codigo;
+  calculos: Calculo[] = [];
+  valCalculadora = 777;
+
+  ponResultado(origen: string, valor: number) {
+    this.calculos.push({
+      pos: this.calculos.length + 1,
+      origen,
+      valor
+    });
+  }
+
+}
+interface Calculo {
+  pos: number
+  origen: string
+  valor: number
 }
