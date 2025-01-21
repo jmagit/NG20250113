@@ -1,4 +1,4 @@
-<h1>Hola {{nombre() | uppercase}}</h1>
+<h1>Hola {{nombre() | elipsis:10 | uppercase}}</h1>
 <p>
   <input type="text" [(ngModel)]="nombre">
   <input type="button" value="saluda" (click)="saluda()" >
@@ -27,13 +27,13 @@
 <p [class.semi-visible]="!visible()">Ahora me ves bien</p>
 <p>Fecha: {{Fecha | date:'dd/MMM/yyyy' | uppercase}} </p>
 <p>
-  Calcula: 2 + 2 = {{(2 + 2) | number:'2.2-3'}} = {{calcula(2, 2) | currency:'EUR':'symbol':'1.2-2'}}
+  Calcula: 2 + 2 = {{(2 + 2) | number:'2.2-3'}} = {{calcula | exec:2:fontSize() | currency:'EUR':'symbol':'1.2-2'}}
 </p>
 
 <ul>
   <li *ngFor="let item of listado() | slice:-5; let indice = index; let fondo=odd;"
     [style.background-color]="fondo ? 'LightBlue' : 'Lavender'">
-    {{item.nombre}} ({{item.id}}) [Elemento {{indice + 1}} de {{listado().length}}]
+    {{item.nombre | capitalize}} ({{item.id}}) [Elemento {{indice + 1}} de {{listado().length}}]
   </li>
 </ul>
 <ul>
@@ -54,4 +54,7 @@
   <input type="button" value="Añadir" (click)="add(txtProvincia.value)">
 </p>
 
+<my-sizer (sizeChange)="fontSize.set($event)" [step]="2" />
+<p [style.font-size.px]="fontSize()">
 {{listado() | json}}
+</p>

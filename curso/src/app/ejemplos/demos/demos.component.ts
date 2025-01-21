@@ -1,12 +1,16 @@
 import { CommonModule, CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, NgClass, NgFor, NgIf, SlicePipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
-import { Component, computed, OnDestroy, OnInit, Signal, signal } from '@angular/core';
+import { Component, computed, effect, OnDestroy, OnInit, Signal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CapitalizePipe, ElipsisPipe, ExecPipe, LoggerService, SizerComponent } from '@my/core';
 import { Unsubscribable } from 'rxjs';
 import { NotificationService, NotificationType } from 'src/app/common-services';
 
 @Component({
   selector: 'app-demos',
-  imports: [FormsModule, CommonModule, NgClass, NgIf, NgFor, UpperCasePipe, DecimalPipe, CurrencyPipe, TitleCasePipe, DatePipe, SlicePipe, JsonPipe],
+  imports: [FormsModule, CommonModule, NgClass, NgIf, NgFor,
+    UpperCasePipe, DecimalPipe, CurrencyPipe, TitleCasePipe, DatePipe, SlicePipe, JsonPipe,
+    ElipsisPipe, CapitalizePipe, ExecPipe, SizerComponent,
+  ],
   templateUrl: './demos.component.html',
   styleUrl: './demos.component.css'
 })
@@ -27,7 +31,10 @@ export class DemosComponent implements OnInit, OnDestroy {
   public readonly visible = signal(true);
   public readonly estetica = signal({ importante: true, error: false, urgente: true });
 
-  constructor(public vm: NotificationService) { }
+  constructor(public vm: NotificationService, private out: LoggerService) {
+    this.calcula = this.calcula.bind(this);
+    // effect(() => vm.add(`Se ha seleccionado la provincia ${this.listado().find(item => item.id == this.idProvincia())?.nombre}`, NotificationType.info));
+   }
 
   public get Nombre(): Signal<string> { return this.nombre.asReadonly() }
   public set Nombre(value: string) {
@@ -58,7 +65,9 @@ export class DemosComponent implements OnInit, OnDestroy {
     this.estetica.update(est => ({ ...est, error: !est.error }));
   }
 
+  cont = 0;
   calcula(a: number, b: number): number {
+    this.out.log(`Calcula: ${++this.cont}`);
     return a + b;
   }
 
