@@ -5,6 +5,7 @@ import GraficoSvgComponent from '../grafico-svg/grafico-svg.component';
 import { NotificationComponent } from 'src/app/main';
 import { NgComponentOutlet } from '@angular/common';
 import { CalculadoraComponent } from '../calculadora/calculadora.component';
+import { FormularioComponent } from '../formulario/formulario.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,10 +15,11 @@ import { CalculadoraComponent } from '../calculadora/calculadora.component';
 })
 export class DashboardComponent {
   menu = [
-    { texto: 'demos', icono: 'fa-solid fa-person-chalkboard', componente: DemosComponent },
+    { texto: 'formulario', icono: 'fa-solid fa-chalkboard-user', componente: FormularioComponent },
     { texto: 'inicio', icono: 'fa-solid fa-house', componente: HomeComponent },
-    { texto: 'grafo', icono: 'fa-solid fa-image', componente: GraficoSvgComponent },
+    { texto: 'demos', icono: 'fa-solid fa-person-chalkboard', componente: DemosComponent },
     { texto: 'calculadora', icono: 'fa-solid fa-calculator', componente: CalculadoraComponent },
+    { texto: 'grafo', icono: 'fa-solid fa-image', componente: GraficoSvgComponent },
   ]
   actual = signal(0)
   cuerpo = computed(() => this.menu[this.actual()]?.componente)
