@@ -4,10 +4,11 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ErrorMessagePipe } from '@my/core';
 import { FormButtonsComponent } from 'src/app/common-component';
+import { NIFNIEValidator, TypeValidator, UppercaseValidator } from 'src/lib/my-core/directives/mis-validadores.directive';
 
 @Component({
   selector: 'app-formulario',
-  imports: [ FormsModule, FormButtonsComponent, JsonPipe, ErrorMessagePipe, ],
+  imports: [ FormsModule, FormButtonsComponent, JsonPipe, ErrorMessagePipe, NIFNIEValidator, UppercaseValidator, TypeValidator ],
   templateUrl: './formulario.component.html',
   styleUrl: './formulario.component.css'
 })
