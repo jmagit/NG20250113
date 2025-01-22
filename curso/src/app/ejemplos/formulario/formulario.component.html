@@ -1,1 +1,50 @@
-<p>formulario works!</p>
+<h1>Formulario</h1>
+<p>
+  <input type="button" value="add" (click)="add()">
+  <input type="number" value="0" #key>
+  <input type="button" value="edit" (click)="edit(+key.value)">
+</p>
+<form #miForm="ngForm">
+  <div>
+    <label for="id">código:</label>
+    <input type="number" id="id" name="id" [(ngModel)]="elemento.id" #id="ngModel" required min="0">
+    <output class="error" [hidden]="!id.hasError('required') || miForm.pristine">Es obligatorio</output>
+    <output class="error" [hidden]="!id.hasError('min')">Debe ser mayor que 0</output>
+  </div>
+  <div>
+    <label for="nombre">nombre:</label>
+    <input type="text" id="nombre" name="nombre" [(ngModel)]="elemento.nombre" #nombre="ngModel" required maxlength="10" minlength="2">
+    <output class="error" [hidden]="!nombre.hasError('required')">Es obligatorio</output>
+    <output class="error" [hidden]="!nombre.hasError('minlength') && !nombre.hasError('maxlength')">Debe tener entre 2 y 10 letras</output>
+  </div>
+  <div>
+    <label for="apellidos">apellidos:</label>
+    <input type="text" id="apellidos" name="apellidos" [(ngModel)]="elemento.apellidos" #apellidos="ngModel" maxlength="10" minlength="2" pattern="^[A-Z ]*$">
+    <output class="error" [hidden]="apellidos.valid">{{apellidos.errors | errormsg:'Tiene que estar en mayúsculas'}}</output>
+  </div>
+  <div>
+    <label for="email">email:</label>
+    <input type="email" id="email" name="email" [(ngModel)]="elemento.email" #email="ngModel" email>
+    <output class="error" [hidden]="email.valid">{{email.errors | errormsg}}</output>
+  </div>
+  <div>
+    <label for="edad">edad:</label>
+    <input type="number" id="edad" name="edad" [(ngModel)]="elemento.edad" #edad="ngModel" min="16" max="67">
+    <output class="error" [hidden]="edad.valid">{{edad.errors | errormsg}}</output>
+  </div>
+  <div>
+    <label for="fecha">fecha:</label>
+    <input type="date" id="fecha" name="fecha" [(ngModel)]="elemento.fecha" #fecha="ngModel">
+    <output class="error" [hidden]="fecha.valid">{{fecha.errors | errormsg}}</output>
+  </div>
+  <div>
+    <label for="nif">N.I.F:</label>
+    <input type="text" id="nif" name="nif" [(ngModel)]="elemento.nif" #nif="ngModel">
+    <output class="error" [hidden]="nif.valid">{{nif.errors | errormsg}}</output>
+  </div>
+  <div>
+    <label for="activo">activo:</label>
+    <input type="checkbox" id="activo" name="activo" [(ngModel)]="elemento.activo" #activo="ngModel">
+  </div>
+  <app-form-buttons (send)="send()" [send-disabled]="miForm.invalid" (abandon)="cancel()" />
+</form>
