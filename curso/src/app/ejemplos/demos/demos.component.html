@@ -43,7 +43,7 @@
 <h1>Hola {{nombre() | elipsis:10 | uppercase}}</h1>
 <p>
   <input type="text" [(ngModel)]="nombre">
-  <input type="button" value="saluda" (click)="saluda()" >
+  <input type="button" value="saluda" (winConfirm)="saluda()" >
   <input type="button" value="despide" (click)="despide()" >
   <input type="button" value="di algo" (click)="di('algo')" >
   <input type="button" value="cambia" (click)="cambia()" >
@@ -59,6 +59,7 @@
 <p [innerHTML]="resultado()">Esto se pierde</p>
 
 <p [hidden]="!visible()">Ahora se ve</p>
+<p [myShow]="visible()">Ahora se ve</p>
 <p *ngIf="visible()">Ahora existo</p>
 @if(visible()) {
   <p>Ahora existo (flujo)</p>
@@ -73,7 +74,7 @@
 </p>
 
 <ul>
-  <li *ngFor="let item of listado() | slice:-5; let indice = index; let fondo=odd;"
+  <li *ngFor="let item of listado() | slice:-5 | orderBy:'nombre'; let indice = index; let fondo=odd;"
     [style.background-color]="fondo ? 'LightBlue' : 'Lavender'">
     {{item.nombre | capitalize}} ({{item.id}}) [Elemento {{indice + 1}} de {{listado().length}}]
   </li>
