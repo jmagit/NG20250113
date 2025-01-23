@@ -2,7 +2,7 @@ import { Component, computed, signal } from '@angular/core';
 import { HomeComponent } from 'src/app/main/home/home.component';
 import { DemosComponent } from '../demos/demos.component';
 import GraficoSvgComponent from '../grafico-svg/grafico-svg.component';
-import { NotificationComponent } from 'src/app/main';
+import { AjaxWaitComponent, NotificationComponent } from 'src/app/main';
 import { NgComponentOutlet } from '@angular/common';
 import { CalculadoraComponent } from '../calculadora/calculadora.component';
 import { FormularioComponent } from '../formulario/formulario.component';
@@ -10,7 +10,7 @@ import { LoginComponent, LoginFormComponent } from 'src/app/security';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [ NotificationComponent, NgComponentOutlet, LoginComponent  ],
+  imports: [ NotificationComponent, NgComponentOutlet, LoginComponent, AjaxWaitComponent  ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
