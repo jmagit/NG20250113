@@ -1,10 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JsonPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ErrorMessagePipe, ShowErrorsDirective } from '@my/core';
+import { NIFNIEValidator, TypeValidator, UppercaseValidator, ErrorMessagePipe, ShowErrorsDirective } from '@my/core';
+import { Observable } from 'rxjs';
 import { FormButtonsComponent } from 'src/app/common-component';
-import { NIFNIEValidator, TypeValidator, UppercaseValidator } from 'src/lib/my-core/directives/mis-validadores.directive';
+import { environment } from 'src/environments/environment';
+
+export abstract class RESTDAOService<T, K> {
+  protected baseUrl = environment.apiUrl;
+  protected http = inject(HttpClient)
+
+  constructor(entidad: string, protected option = {}) {
+    this.baseUrl += entidad;
+  }
+  query(extras = {}): Observable<T[]> {
+    return this.http.get<T[]>(this.baseUrl, Object.assign({}, this.option, extras));
+  }
+  get(id: K, extras = {}): Observable<T> {
+    return this.http.get<T>(`${this.baseUrl}/${id}`, Object.assign({}, this.option, extras));
+  }
+  add(item: T, extras = {}): Observable<T> {
+    return this.http.post<T>(this.baseUrl, item, Object.assign({}, this.option, extras));
+  }
+  change(id: K, item: T, extras = {}): Observable<T> {
+    return this.http.put<T>(`${this.baseUrl}/${id}`, item, Object.assign({}, this.option, extras));
+  }
+  remove(id: K, extras = {}): Observable<T> {
+    return this.http.delete<T>(`${this.baseUrl}/${id}`, Object.assign({}, this.option, extras));
+  }
+}
 
 @Component({
   selector: 'app-formulario',
