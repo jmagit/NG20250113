@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JsonPipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpContext } from '@angular/common/http';
 import { Component, inject, Injectable } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NIFNIEValidator, TypeValidator, UppercaseValidator, ErrorMessagePipe, ShowErrorsDirective } from '@my/core';
 import { Observable } from 'rxjs';
 import { FormButtonsComponent } from 'src/app/common-component';
 import { NotificationService } from 'src/app/common-services';
+import { AUTH_REQUIRED } from 'src/app/security';
 import { environment } from 'src/environments/environment';
 
 export abstract class RESTDAOService<T, K> {
@@ -36,7 +37,9 @@ export abstract class RESTDAOService<T, K> {
 @Injectable({ providedIn: 'root' })
 export class PersonasDAOService extends RESTDAOService<any, number> {
   constructor() {
-    super('personas')
+    super('personas', {
+      context: new HttpContext().set(AUTH_REQUIRED, true),
+    })
   }
 }
 
