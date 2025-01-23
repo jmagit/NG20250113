@@ -3,6 +3,7 @@
   <input type="button" value="add" (click)="add()">
   <input type="number" value="0" #key>
   <input type="button" value="edit" (click)="edit(+key.value)">
+  <input type="button" value="list" (click)="list()">
 </p>
 <form #miForm="ngForm">
   @if(modo === 'add') {
@@ -58,3 +59,5 @@
   </div>
   <app-form-buttons (send)="send()" [send-disabled]="miForm.invalid" (abandon)="cancel()" />
 </form>
+
+{{listado | json}}
