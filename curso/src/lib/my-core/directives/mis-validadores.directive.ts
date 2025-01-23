@@ -1,13 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/directive-selector */
 import { Directive, ElementRef, forwardRef } from '@angular/core';
 import { ValidatorFn, AbstractControl, NG_VALIDATORS, Validator, ValidationErrors } from '@angular/forms';
+import isIBAN from 'validator/lib/isIBAN';
 
 export function nifnieValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
+  return (control: AbstractControl): Record<string, any> | null => {
     if (!control.value) { return null; }
     const err = { nifnie: { invalidFormat: true, invalidChar: true, message: 'NIF o NIE invalido' } };
     if (/^((\d{1,8})|([X-Z]\d{7}))[TRWAGMYFPDXBNJZSQVHLCKE]$/.test(control.value.toUpperCase())) {
-      const charsValue: {[index: string]: string} = { X: '0', Y: '1', Z: '2', };
+      const charsValue: Record<string, string> = { X: '0', Y: '1', Z: '2', };
       const numberValue = +((control.value as string).slice(0, -1).replace(/[X,Y,Z]/g, char => charsValue[char]));
       err.nifnie.invalidFormat = false;
       return control.value.toUpperCase().endsWith('TRWAGMYFPDXBNJZSQVHLCKE'.charAt(numberValue % 23)) ? null : err;
@@ -25,7 +27,7 @@ export class NIFNIEValidator implements Validator {
 }
 
 export function uppercaseValidator(): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null => {
+  return (control: AbstractControl): Record<string, any> | null => {
     if (!control.value) { return null; }
     return control.value === control.value.toUpperCase() ? null : { uppercase: 'Tiene que estar en mayúsculas' }
   };
@@ -78,3 +80,19 @@ export class TypeValidator implements Validator {
   }
 }
 
+// https://es.iban.com/estructura
+
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
+export function ibanValidator(control: AbstractControl): { [key: string]: any } | null {
+  if (!control.value) { return null; }
+  return isIBAN(control.value.toString()) ? null : { iban: 'No es un IBAN valido' }
+}
+@Directive({
+  selector: '[iban][formControlName],[iban][formControl],[iban][ngModel]',
+  providers: [{ provide: NG_VALIDATORS, useExisting: IbanValidator, multi: true }]
+})
+export class IbanValidator implements Validator {
+  validate(control: AbstractControl): ValidationErrors | null {
+    return ibanValidator(control);
+  }
+}

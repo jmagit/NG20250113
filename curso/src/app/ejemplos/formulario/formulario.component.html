@@ -33,8 +33,9 @@
   </div>
   <div>
     <label for="email">email:</label>
-    <input type="url" id="email" name="email" [(ngModel)]="elemento.email" #email="ngModel" >
-    <output class="error" [hidden]="email.valid">{{email.errors | errormsg}}</output>
+    <input type="email" id="email" name="email" [(ngModel)]="elemento.email" #email="ngModel" >
+    <!-- <output class="error" [hidden]="email.valid">{{email.errors | errormsg}}</output> -->
+    <div class="error" [myShowErrors]="email.errors"></div>
   </div>
   <div>
     <label for="edad">edad:</label>

@@ -1,7 +1,7 @@
 import { CommonModule, CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, NgClass, NgFor, NgIf, SlicePipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { Component, computed, effect, OnDestroy, OnInit, Signal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CapitalizePipe, ElipsisPipe, ExecPipe, LoggerService, SizerComponent } from '@my/core';
+import { CapitalizePipe, ElipsisPipe, ExecPipe, FilterPipe, LoggerService, OrderByPipe, ShowDirective, SizerComponent, WindowConfirmDirective } from '@my/core';
 import { Unsubscribable } from 'rxjs';
 import { CardComponent, FormButtonsComponent } from 'src/app/common-component';
 import { NotificationService, NotificationType } from 'src/app/common-services';
@@ -13,7 +13,7 @@ import { NotificationComponent } from 'src/app/main';
   imports: [FormsModule, CommonModule, NgClass, NgIf, NgFor,
     UpperCasePipe, DecimalPipe, CurrencyPipe, TitleCasePipe, DatePipe, SlicePipe, JsonPipe,
     ElipsisPipe, CapitalizePipe, ExecPipe, SizerComponent, FormButtonsComponent, CardComponent,
-    CalculadoraComponent, NotificationComponent],
+    CalculadoraComponent, NotificationComponent, WindowConfirmDirective, ShowDirective, OrderByPipe, FilterPipe],
   templateUrl: './demos.component.html',
   styleUrl: './demos.component.css',
   providers: [NotificationService],
@@ -115,6 +115,9 @@ export class DemosComponent implements OnInit, OnDestroy {
       valor
     });
   }
+  // filtrado() {
+  //   return
+  // }
 
 }
 interface Calculo {
