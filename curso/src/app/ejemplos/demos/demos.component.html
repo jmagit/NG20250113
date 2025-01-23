@@ -1,4 +1,4 @@
-<app-notification />
+<!-- <app-notification /> -->
 <div class="container theme-dark">
   <div class="row">
     <div class="col">
@@ -53,7 +53,7 @@
   <input type="button" value="Info" (click)="vm.add('Solo una notificación informativa',  vm.NotificationType.info)" >
   <input type="button" value="Log" (click)="vm.add('Para trazar con notificaciones',  vm.NotificationType.log)" >
 </p>
-
+<p>{{(vm.Notificacion | async)?.Message}}</p>
 <!-- <p [textContent]="resultado">Esto esta mal, enlaza la señal y no el valor</p> -->
 <p [textContent]="resultado()">Esto se pierde</p>
 <p [innerHTML]="resultado()">Esto se pierde</p>
