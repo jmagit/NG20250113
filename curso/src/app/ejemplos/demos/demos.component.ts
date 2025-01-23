@@ -1,4 +1,4 @@
-import { CommonModule, CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, NgClass, NgFor, NgIf, SlicePipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
+import { AsyncPipe, CommonModule, CurrencyPipe, DatePipe, DecimalPipe, JsonPipe, NgClass, NgFor, NgIf, SlicePipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
 import { Component, computed, effect, OnDestroy, OnInit, Signal, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CapitalizePipe, ElipsisPipe, ExecPipe, FilterPipe, LoggerService, OrderByPipe, ShowDirective, SizerComponent, WindowConfirmDirective } from '@my/core';
@@ -13,7 +13,7 @@ import { NotificationComponent } from 'src/app/main';
   imports: [FormsModule, CommonModule, NgClass, NgIf, NgFor,
     UpperCasePipe, DecimalPipe, CurrencyPipe, TitleCasePipe, DatePipe, SlicePipe, JsonPipe,
     ElipsisPipe, CapitalizePipe, ExecPipe, SizerComponent, FormButtonsComponent, CardComponent,
-    CalculadoraComponent, NotificationComponent, WindowConfirmDirective, ShowDirective, OrderByPipe, FilterPipe],
+    CalculadoraComponent, WindowConfirmDirective, ShowDirective, OrderByPipe, AsyncPipe, /*NotificationComponent, FilterPipe*/],
   templateUrl: './demos.component.html',
   styleUrl: './demos.component.css',
   providers: [NotificationService],
@@ -85,12 +85,16 @@ export class DemosComponent implements OnInit, OnDestroy {
   private suscriptor: Unsubscribable | undefined;
 
   ngOnInit(): void {
-    this.suscriptor = this.vm.Notificacion.subscribe(n => {
-      if (n.Type !== NotificationType.error) { return; }
-      // window.alert(`Suscripción: ${n.Message}`);
-      // this.vm.remove(this.vm.Listado.length - 1);
+    this.suscriptor = this.vm.Notificacion.subscribe({
+      next: n => {
+        if (n.Type !== NotificationType.error) { return; }
+        window.alert(`Suscripción: ${n.Message}`);
+        this.vm.remove(this.vm.Listado.length - 1);
+      },
+      complete: () => this.suscriptor?.unsubscribe()
     });
   }
+
   ngOnDestroy(): void {
     if (this.suscriptor) {
       this.suscriptor.unsubscribe();
