@@ -8,51 +8,12 @@ import { RESTDAOService, ModoCRUD } from '../code-base';
 import { NavigationService, NotificationService } from '../common-services';
 import { AuthService, AUTH_REQUIRED } from '../security';
 
-export interface IContacto {
-  [index: string]: any;
-  id?: number
-  tratamiento?: string
-  nombre?: string
-  apellidos?: string
-  telefono?: string
-  email?: string
-  sexo?: string
-  nacimiento?: string
-  avatar?: string
-  conflictivo?: boolean
-  icono?: string
-}
-
-export class Contacto implements IContacto {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [index: string]: any;
-  constructor(
-    public id: number = 0,
-    private _tratamiento?: string,
-    public nombre?: string,
-    public apellidos?: string,
-    public telefono?: string,
-    public email?: string,
-    public sexo: string = 'H',
-    public nacimiento?: string,
-    public avatar?: string,
-    public conflictivo: boolean = false,
-  ) { }
-  get tratamiento() { return this._tratamiento }
-  set tratamiento(value: string | undefined) {
-    if(this._tratamiento === value) return
-    this._tratamiento = value
-    if(!this._tratamiento) return
-    this.sexo = this._tratamiento.endsWith('a.') ? 'M' : 'H'
-  }
-}
-
 @Injectable({
   providedIn: 'root'
 })
-export class ContactosDAOService extends RESTDAOService<any, number> {
+export class PeliculasDAOService extends RESTDAOService<any, number> {
   constructor() {
-    super('contactos', { context: new HttpContext().set(AUTH_REQUIRED, true) });
+    super('peliculas', { context: new HttpContext().set(AUTH_REQUIRED, true) });
   }
   page(page: number, rows: number = 20): Observable<{ page: number, pages: number, rows: number, list: Array<any> }> {
     return new Observable(subscriber => {
@@ -68,16 +29,16 @@ export class ContactosDAOService extends RESTDAOService<any, number> {
 @Injectable({
   providedIn: 'root'
 })
-export class ContactosViewModelService {
+export class PeliculasViewModelService {
   protected modo: ModoCRUD = 'list';
-  protected listado: IContacto[] = [];
-  protected elemento: IContacto = {};
+  protected listado: any[] = [];
+  protected elemento: any = {};
   protected idOriginal?: number;
-  protected listURL = '/contactos';
+  protected listURL = '/peliculas';
 
   constructor(protected notify: NotificationService,
     protected out: LoggerService,
-    protected dao: ContactosDAOService
+    protected dao: PeliculasDAOService
     , public auth: AuthService, protected router: Router, private navigation: NavigationService
   ) { }
 
@@ -96,7 +57,7 @@ export class ContactosViewModelService {
   }
 
   public add(): void {
-    this.elemento = new Contacto();
+    this.elemento = {};
     this.modo = 'add';
   }
   public edit(key: any): void {
@@ -139,9 +100,9 @@ export class ContactosViewModelService {
   public cancel(): void {
     this.clear()
     // this.list();
-    // this.load(this.page)
+    this.load(this.page)
     // this.router.navigateByUrl(this.listURL);
-    this.navigation.back()
+    // this.navigation.back()
   }
   public send(): void {
     switch (this.modo) {

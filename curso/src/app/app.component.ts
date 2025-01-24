@@ -2,16 +2,18 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { LoggerService } from '@my/core';
-import { NotificationComponent } from './main';
+import { AjaxWaitComponent, FooterComponent, HeaderComponent, NotificationComponent } from './main';
 import { DemosComponent } from './ejemplos';
 import { NotificationModalComponent } from "./main/notification-modal/notification-modal.component";
 import { NavigationService, NotificationService, NotificationType } from './common-services';
 import { HomeComponent } from "./main/home/home.component";
 import { DashboardComponent } from './ejemplos/dashboard/dashboard.component';
+import { NgComponentOutlet } from '@angular/common';
+import { LoginComponent } from './security';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, /*NotificationComponent, DemosComponent, NotificationModalComponent, HomeComponent*/ DashboardComponent, ],
+  imports: [RouterOutlet, NotificationModalComponent, AjaxWaitComponent, HeaderComponent, FooterComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

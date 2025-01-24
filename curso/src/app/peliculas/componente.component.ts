@@ -7,23 +7,23 @@ import { FormsModule } from '@angular/forms';
 import { DatePipe, NgIf, } from '@angular/common';
 import { PaginatorModule } from 'primeng/paginator';
 import { ErrorMessagePipe, TypeValidator } from '@my/core';
-import { ContactosViewModelService } from './servicios.service';
+import { PeliculasViewModelService } from './servicios.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-    selector: 'app-contactos',
+    selector: 'app-peliculas',
     templateUrl: './tmpl-anfitrion.component.html',
     styleUrls: ['./componente.component.css'],
     imports: [
-        forwardRef(() => ContactosAddComponent),
-        forwardRef(() => ContactosEditComponent),
-        forwardRef(() => ContactosViewComponent),
-        forwardRef(() => ContactosListComponent),
+        forwardRef(() => PeliculasAddComponent),
+        forwardRef(() => PeliculasEditComponent),
+        forwardRef(() => PeliculasViewComponent),
+        forwardRef(() => PeliculasListComponent),
     ]
 })
-export class ContactosComponent implements OnInit, OnDestroy {
-  constructor(protected vm: ContactosViewModelService) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
+export class PeliculasComponent implements OnInit, OnDestroy {
+  constructor(protected vm: PeliculasViewModelService) { }
+  public get VM(): PeliculasViewModelService { return this.vm; }
   ngOnInit(): void {
     // this.vm.list();
     this.vm.load()
@@ -31,71 +31,71 @@ export class ContactosComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void { this.vm.clear(); }
 }
 
-/*
+
 @Component({
-  selector: 'app-contactos-list',
+  selector: 'app-peliculas-list',
   templateUrl: './tmpl-list.sin-rutas.component.html',
   styleUrls: ['./componente.component.css'],
   standalone: true,
   imports: [PaginatorModule, NgIf, ]
 })
-export class ContactosListComponent implements OnInit, OnDestroy {
-  constructor(protected vm: ContactosViewModelService) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
+export class PeliculasListComponent implements OnInit, OnDestroy {
+  constructor(protected vm: PeliculasViewModelService) { }
+  public get VM(): PeliculasViewModelService { return this.vm; }
   ngOnInit(): void { }
   ngOnDestroy(): void { }
 }
 @Component({
-  selector: 'app-contactos-add',
+  selector: 'app-peliculas-add',
   templateUrl: './tmpl-form.component.html',
   styleUrls: ['./componente.component.css'],
   standalone: true,
   imports: [FormsModule, TypeValidator, ErrorMessagePipe]
 })
-export class ContactosAddComponent implements OnInit {
-  constructor(protected vm: ContactosViewModelService) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
+export class PeliculasAddComponent implements OnInit {
+  constructor(protected vm: PeliculasViewModelService) { }
+  public get VM(): PeliculasViewModelService { return this.vm; }
   ngOnInit(): void { }
 }
 @Component({
-  selector: 'app-contactos-edit',
+  selector: 'app-peliculas-edit',
   templateUrl: './tmpl-form.component.html',
   styleUrls: ['./componente.component.css'],
   standalone: true,
   imports: [FormsModule, TypeValidator, ErrorMessagePipe]
 })
-export class ContactosEditComponent implements OnInit, OnDestroy {
-  constructor(protected vm: ContactosViewModelService) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
+export class PeliculasEditComponent implements OnInit, OnDestroy {
+  constructor(protected vm: PeliculasViewModelService) { }
+  public get VM(): PeliculasViewModelService { return this.vm; }
   ngOnInit(): void { }
   ngOnDestroy(): void { }
 }
 @Component({
-  selector: 'app-contactos-view',
+  selector: 'app-peliculas-view',
   templateUrl: './tmpl-view.component.html',
   styleUrls: ['./componente.component.css'],
   standalone: true,
   imports: [DatePipe]
 })
-export class ContactosViewComponent implements OnInit, OnDestroy {
-  constructor(protected vm: ContactosViewModelService) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
+export class PeliculasViewComponent implements OnInit, OnDestroy {
+  constructor(protected vm: PeliculasViewModelService) { }
+  public get VM(): PeliculasViewModelService { return this.vm; }
   ngOnInit(): void { }
   ngOnDestroy(): void { }
 }
-*/
 
+/*
 @Component({
-    selector: 'app-contactos-list',
+    selector: 'app-peliculas-list',
     templateUrl: './tmpl-list.con-rutas.component.html',
     styleUrls: ['./componente.component.css'],
     imports: [RouterLink, PaginatorModule]
 })
-export class ContactosListComponent implements OnChanges, OnDestroy {
+export class PeliculasListComponent implements OnChanges, OnDestroy {
   readonly page = input(0);
 
-  constructor(protected vm: ContactosViewModelService) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
+  constructor(protected vm: PeliculasViewModelService) { }
+  public get VM(): PeliculasViewModelService { return this.vm; }
   // ngOnInit(): void {
   //   // this.vm.list();
   //   this.vm.load()
@@ -106,29 +106,29 @@ export class ContactosListComponent implements OnChanges, OnDestroy {
   ngOnDestroy(): void { this.vm.clear(); }
 }
 @Component({
-    selector: 'app-contactos-add',
+    selector: 'app-peliculas-add',
     templateUrl: './tmpl-form.component.html',
     styleUrls: ['./componente.component.css'],
     imports: [FormsModule, TypeValidator, ErrorMessagePipe]
 })
-export class ContactosAddComponent implements OnInit {
-  constructor(protected vm: ContactosViewModelService) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
+export class PeliculasAddComponent implements OnInit {
+  constructor(protected vm: PeliculasViewModelService) { }
+  public get VM(): PeliculasViewModelService { return this.vm; }
   ngOnInit(): void {
     this.vm.add();
   }
 }
 @Component({
-    selector: 'app-contactos-edit',
+    selector: 'app-peliculas-edit',
     templateUrl: './tmpl-form.component.html',
     styleUrls: ['./componente.component.css'],
     imports: [FormsModule, TypeValidator, ErrorMessagePipe]
 })
-export class ContactosEditComponent implements OnInit, OnDestroy {
+export class PeliculasEditComponent implements OnInit, OnDestroy {
   private obs$?: Subscription;
-  constructor(protected vm: ContactosViewModelService,
+  constructor(protected vm: PeliculasViewModelService,
     protected route: ActivatedRoute, protected router: Router) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
+  public get VM(): PeliculasViewModelService { return this.vm; }
   ngOnInit(): void {
     this.obs$ = this.route.paramMap.subscribe(
       (params: ParamMap) => {
@@ -145,15 +145,15 @@ export class ContactosEditComponent implements OnInit, OnDestroy {
   }
 }
 @Component({
-    selector: 'app-contactos-view',
+    selector: 'app-peliculas-view',
     templateUrl: './tmpl-view.component.html',
     styleUrls: ['./componente.component.css'],
     imports: [DatePipe]
 })
-export class ContactosViewComponent implements OnChanges {
+export class PeliculasViewComponent implements OnChanges {
   readonly id = input<string>();
-  constructor(protected vm: ContactosViewModelService, protected router: Router) { }
-  public get VM(): ContactosViewModelService { return this.vm; }
+  constructor(protected vm: PeliculasViewModelService, protected router: Router) { }
+  public get VM(): PeliculasViewModelService { return this.vm; }
   ngOnChanges(_changes: SimpleChanges): void {
     const id = this.id();
     if (id) {
@@ -163,9 +163,9 @@ export class ContactosViewComponent implements OnChanges {
     }
   }
 }
+*/
 
-
-export const CONTACTOS_COMPONENTES = [
-  // ContactosComponent,
-  ContactosListComponent, ContactosAddComponent, ContactosEditComponent, ContactosViewComponent,
+export const PELICULAS_COMPONENTES = [
+  // PeliculasComponent,
+  PeliculasListComponent, PeliculasAddComponent, PeliculasEditComponent, PeliculasViewComponent,
 ];
