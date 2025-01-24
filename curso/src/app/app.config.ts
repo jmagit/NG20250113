@@ -13,6 +13,10 @@ import { provideHttpClient, withInterceptorsFromDi, withInterceptors, HTTP_INTER
 import { AjaxWaitInterceptor, ajaxWaitInterceptor } from './main';
 import { AuthInterceptor } from './security';
 
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeng/themes/aura';
+
 export const appConfig: ApplicationConfig = {
   providers: [
     LoggerService,
@@ -24,5 +28,12 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi(), withInterceptors([ajaxWaitInterceptor])),
+    provideAnimationsAsync(),
+    providePrimeNG({
+        theme: {
+            preset: Aura
+        }
+    })
+
   ]
 };
