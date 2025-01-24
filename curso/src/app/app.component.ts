@@ -5,7 +5,7 @@ import { LoggerService } from '@my/core';
 import { NotificationComponent } from './main';
 import { DemosComponent } from './ejemplos';
 import { NotificationModalComponent } from "./main/notification-modal/notification-modal.component";
-import { NotificationService, NotificationType } from './common-services';
+import { NavigationService, NotificationService, NotificationType } from './common-services';
 import { HomeComponent } from "./main/home/home.component";
 import { DashboardComponent } from './ejemplos/dashboard/dashboard.component';
 
@@ -16,6 +16,7 @@ import { DashboardComponent } from './ejemplos/dashboard/dashboard.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  private notify = inject(NavigationService);
 
   // constructor(out: LoggerService) {
   //   out.error('Esto es un error');
