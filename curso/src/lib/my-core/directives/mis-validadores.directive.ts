@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/directive-selector */
-import { Directive, ElementRef, forwardRef } from '@angular/core';
-import { ValidatorFn, AbstractControl, NG_VALIDATORS, Validator, ValidationErrors } from '@angular/forms';
+import { Directive, ElementRef, forwardRef, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ValidatorFn, AbstractControl, NG_VALIDATORS, Validator, ValidationErrors, NgModel } from '@angular/forms';
 import isIBAN from 'validator/lib/isIBAN';
 
 export function nifnieValidator(): ValidatorFn {
@@ -95,4 +95,28 @@ export class IbanValidator implements Validator {
   validate(control: AbstractControl): ValidationErrors | null {
     return ibanValidator(control);
   }
+}
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
+export function isNotBlankValidator(control: AbstractControl): { [key: string]: any } | null {
+  return control.value != null && control.value != undefined && control.value.toString().trim() !== '' ? null : { isNotBlank: 'No puede estar vacío' }
+}
+
+export function equalsToValidator(cntrlBind?: AbstractControl): ValidatorFn {
+  let subscribe: boolean = false;
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!subscribe && cntrlBind) {
+      subscribe = true;
+      cntrlBind.valueChanges.subscribe(() => {  control.updateValueAndValidity();  });
+    }
+    return (!cntrlBind || control.value !== cntrlBind.value) ? { 'equalsTo': `${control.value} distinto de ${cntrlBind?.value}` } : null;
+  }
+}
+@Directive({
+  selector: '[equalsTo]', providers: [{ provide: NG_VALIDATORS, useExisting: forwardRef(() => EqualsToValidator), multi: true }],
+})
+export class EqualsToValidator implements Validator, OnChanges {
+  @Input({alias: 'equalsTo', required: true }) cntrlBind?: NgModel
+  private validator: ValidatorFn = () => null
+  ngOnChanges(_changes: SimpleChanges): void { this.validator = equalsToValidator(this.cntrlBind?.control) }
+  validate(control: AbstractControl): ValidationErrors | null {  return this.validator(control) }
 }
