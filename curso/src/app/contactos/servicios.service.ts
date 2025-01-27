@@ -12,6 +12,7 @@ export interface IContacto {
   [index: string]: any;
   id?: number
   tratamiento?: string
+  // Tratamiento?: string
   nombre?: string
   apellidos?: string
   telefono?: string
@@ -50,11 +51,11 @@ export class Contacto implements IContacto {
 @Injectable({
   providedIn: 'root'
 })
-export class ContactosDAOService extends RESTDAOService<any, number> {
+export class ContactosDAOService extends RESTDAOService<Contacto, number> {
   constructor() {
     super('contactos', { context: new HttpContext().set(AUTH_REQUIRED, true) });
   }
-  page(page: number, rows: number = 20): Observable<{ page: number, pages: number, rows: number, list: Array<any> }> {
+  page(page: number, rows: number = 20): Observable<{ page: number, pages: number, rows: number, list: Contacto[] }> {
     return new Observable(subscriber => {
       const url = `${this.baseUrl}?_page=${page}&_rows=${rows}&_sort=nombre,apellidos`
       this.http.get<any>(url, this.option).subscribe({
@@ -70,8 +71,8 @@ export class ContactosDAOService extends RESTDAOService<any, number> {
 })
 export class ContactosViewModelService {
   protected modo: ModoCRUD = 'list';
-  protected listado: IContacto[] = [];
-  protected elemento: IContacto = {};
+  protected listado: Contacto[] = [];
+  protected elemento!: Contacto;
   protected idOriginal?: number;
   protected listURL = '/contactos';
 
@@ -131,7 +132,7 @@ export class ContactosViewModelService {
   }
 
   clear() {
-    this.elemento = {};
+    this.elemento = new Contacto()
     this.idOriginal = undefined;
     this.listado = [];
   }
