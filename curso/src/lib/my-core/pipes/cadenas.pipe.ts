@@ -25,6 +25,16 @@ export class CapitalizePipe implements PipeTransform {
 }
 
 @Pipe({
+  name: 'normalize',
+  standalone: true
+})
+export class NormalizePipe implements PipeTransform {
+  transform(text: string): string {
+    return (text??'').normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, "-")
+  }
+}
+
+@Pipe({
     name: 'striptags'
 })
 export class StripTagsPipe implements PipeTransform {
